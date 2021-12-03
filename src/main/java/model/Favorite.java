@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Table(name = "favorite", indexes = {
+@Table(name = "favorites", indexes = {
         @Index(name = "FK_Videos_favorite_idx", columnList = "Video_ID"),
         @Index(name = "FK_Users_favorite_idx", columnList = "User_ID")
 })

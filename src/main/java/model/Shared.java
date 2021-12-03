@@ -3,7 +3,7 @@ package model;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Table(name = "shared", indexes = {
+@Table(name = "shareds", indexes = {
         @Index(name = "FK_Videos_Shared_idx", columnList = "Video_ID"),
         @Index(name = "FK_Users_Shared_idx", columnList = "User_ID")
 })

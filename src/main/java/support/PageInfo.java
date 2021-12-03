@@ -16,6 +16,7 @@ public class PageInfo {
         pageRoute.put(PageType.SITE_REGISTER_USER, new PageInfo("Register", "/views/user/sign-up.jsp"));
         pageRoute.put(PageType.SITE_SIGNIN_USER, new PageInfo("Sign in", "/views/user/sign-in.jsp"));
         pageRoute.put(PageType.SITE_EDIT_PROFILE, new PageInfo("Edit-Profile", "/views/user/edit-profile.jsp"));
+        pageRoute.put(PageType.SITE_CHANGE_PASSWORD, new PageInfo("Change-Password", "/views/user/change-password.jsp"));
     }
 
     public static void prepareAndForward(HttpServletRequest req, HttpServletResponse resp, PageType pageType) throws ServletException, IOException {

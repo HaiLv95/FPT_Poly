@@ -19,7 +19,12 @@
     <%--    <script src="${pageContext.request.contextPath}/views/js/content-view.js" type="text/javascript">--%>
     <%--        console.log("hello")--%>
     <%--    </script>--%>
-
+    <style>
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 <body onload="ShowToast()">
 <c:url var="url" value="/"></c:url>
@@ -33,41 +38,20 @@
         <jsp:include page="/views/toast/toast_failed.jsp"></jsp:include>
     </c:if>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light  bg-success">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="${url}Home">ONLINE INTERTAMENT</a>
-            <button class="navbar-toggler" type="button"
-                    data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active"
-                           aria-current="page" href="${url}Favorite">MY FAVORITE</a></li>
-                </ul>
-                <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                       role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black">
-                        MY ACCOUNT </a>
-                    <ul class="dropdown-menu bg-light"
-                        aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="${url}Sign-in">Login</a></li>
-                        <li><a class="dropdown-item" href="${url}User/Forgot-password">Forgot Password</a></li>
-                        <li><a class="dropdown-item" href="${url}User/Sign-up"> Registration</a></li>
-                        <li><a class="dropdown-item" href="${url}Sign-out">Log Off</a></li>
-                        <li><a class="dropdown-item" href="${url}Change-password">Change Password</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="${url}User/Edit-profile">Edit Profile</a></li>
-                    </ul>
-                </div>
+        <nav class="navbar navbar-expand-lg navbar-light  bg-success">
+            <div class="container-fluid">
+            <%-- Navbar content --%>
+            <c:choose>
+                <c:when test="${sessionScope.user.admin}">
+                    <jsp:include page="/views/admin/admin-navbar.jsp"></jsp:include>
+                </c:when>
+                <c:otherwise>
+                    <jsp:include page="user-navbar.jsp"></jsp:include>
+                </c:otherwise>
+            </c:choose>
+            <%-- Navbar content --%>
             </div>
-        </div>
-    </nav>
+        </nav>
     <!-- Navbar end -->
     <!-- Content -->
     <jsp:include page="${page.contentUrl}"></jsp:include>
@@ -92,8 +76,8 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous">
 </script>
-<script src="${pageContext.request.contextPath}/views/js/content-view.js" type="text/javascript">
-</script>
+<script src="${pageContext.request.contextPath}/views/js/content-view.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/views/js/change-password.js" type="text/javascript"></script>
 <!-- Script -->
 </body>
 </html>

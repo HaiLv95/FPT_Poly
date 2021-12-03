@@ -3,7 +3,6 @@ package servlet;
 import dao.UserDAO;
 import model.User;
 import org.apache.commons.beanutils.BeanUtils;
-import support.CookieUtils;
 import support.PageInfo;
 import support.PageType;
 
@@ -11,14 +10,20 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 @WebServlet({
         "/User",
+        "/Admin",
         "/Sign-in",
         "/User/Sign-up",
         "/Sign-out",
-        "/User/Edit-profile"
+        "/User/Edit-profile",
+        "/User/Forgot-password",
+        "/User/Change-password",
+        "/Admin/Edit-profile",
+        "/Admin/Forgot-password",
+        "/Admin/Change-password",
+        "/Admin/Sign-up",
 
 })
 public class ServletUser extends HttpServlet {
@@ -39,22 +44,21 @@ public class ServletUser extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        resp.setCharacterEncoding("UTF-8");
         session = req.getSession();
         String uri = req.getRequestURI().toLowerCase();
         if (uri.contains("sign-in")) {
             doSignin(req, resp);
-        }  else if (uri.contains("user/sign-up")) {
+        }  else if (uri.contains("sign-up")) {
             doSignup(req, resp);
         } else if (uri.contains("sign-out")) {
             session.setAttribute("user", null);
-            doSignin(req, resp);
-        } else  if (uri.contains("user/edit-profile")){
-            if (session.getAttribute("user") != null){
-                doEditprooffile(req, resp);
-            }else {
-                req.setAttribute("msgFailed", "Bạn chưa đăng nhập");
-                doSignin(req, resp);
-            }
+            PageInfo.prepareAndForward(req, resp, PageType.SITE_HOME);
+        } else  if (uri.contains("edit-profile")){
+                doEditprofile(req, resp);
+        }else if(uri.contains("user/change-password")){
+                doChangePassword(req,resp);
         }
     }
 
@@ -112,21 +116,42 @@ public class ServletUser extends HttpServlet {
         }
         PageInfo.prepareAndForward(req, resp, pageType);
     }
-    public void doEditprooffile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doEditprofile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PageType pageType = PageType.SITE_EDIT_PROFILE;
         UserDAO userDAO = new UserDAO();
         String method = req.getMethod();
         User user = (User) session.getAttribute("user");
         if (method.equalsIgnoreCase("Post")) {
             try {
-                BeanUtils.populate(user, req.getParameterMap());
-                System.out.println(user.getPassword());
-//                userDAO.update(user);
-//                req.setAttribute("msg", "Cập nhật thông tin thành công");
-//                pageType = PageType.SITE_SIGNIN_USER;
+                if (req.getParameter("passwordcf").equals(user.getPassword())){
+                    BeanUtils.populate(user, req.getParameterMap());
+                    userDAO.update(user);
+                    req.setAttribute("msg", "Cập nhật thông tin thành công");
+                }else {
+                    req.setAttribute("msgFailed", "Mật khẩu không chính xác!");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 req.setAttribute("msgFailed", "Cập nhật không thành công không thành công" + e);
+            }
+        }
+        PageInfo.prepareAndForward(req, resp, pageType);
+    }
+    protected void doChangePassword(HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException, IOException{
+        PageType pageType = PageType.SITE_CHANGE_PASSWORD;
+        UserDAO userDAO = new UserDAO();
+        String method = req.getMethod();
+        User user = (User) session.getAttribute("user");
+        if (method.equalsIgnoreCase("Post")){
+            try {
+                BeanUtils.populate(user, req.getParameterMap());
+                userDAO.update(user);
+                req.setAttribute("msg", "Đổi mật khẩu thành công");
+                pageType = PageType.SITE_SIGNIN_USER;
+            } catch (Exception e) {
+                e.printStackTrace();
+                req.setAttribute("msgFailed", "Đổi mật khẩu không thành công không thành công" + e);
             }
         }
         PageInfo.prepareAndForward(req, resp, pageType);

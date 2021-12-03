@@ -2,12 +2,17 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+        crossorigin="anonymous">
 <div class="container-fluid">
     <div class="row justify-content-md-center mt-4">
         <!-- Video layout -->
         <div class="col-md-7">
             <div class="card mb-3">
-                <iframe width="100%" height="500px" src="https://www.youtube.com/embed/Rcg2ljKWTuw"
+                <iframe max-width="860" height="500px" src="https://www.youtube.com/embed/Rcg2ljKWTuw"
                         title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
