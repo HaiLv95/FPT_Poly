@@ -60,7 +60,7 @@ public class User {
         return username;
     }
 
-    public void setId(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 }

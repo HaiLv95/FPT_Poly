@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-@WebFilter({"/User/*", "/Admin/*"})
+@WebFilter({"/user/*", "/admin/*"})
 public class CheckLogin implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -21,12 +21,6 @@ public class CheckLogin implements Filter {
             httpServletRequest.setAttribute("msgFailed", "Bạn chưa đăng nhập");
             PageInfo.prepareAndForward(httpServletRequest, httpServletResponse, PageType.SITE_SIGNIN_USER);
         }else {
-            if (uri.contains("/Admin")){
-                if (!user.getAdmin()){
-                    httpServletRequest.setAttribute("msgFailed", "Truy cập không hợp lệ");
-                    PageInfo.prepareAndForward(httpServletRequest, httpServletResponse, PageType.SITE_HOME);
-                }
-            }
             chain.doFilter(request, response);
         }
     }

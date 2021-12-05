@@ -17,6 +17,8 @@ public class PageInfo {
         pageRoute.put(PageType.SITE_SIGNIN_USER, new PageInfo("Sign in", "/views/user/sign-in.jsp"));
         pageRoute.put(PageType.SITE_EDIT_PROFILE, new PageInfo("Edit-Profile", "/views/user/edit-profile.jsp"));
         pageRoute.put(PageType.SITE_CHANGE_PASSWORD, new PageInfo("Change-Password", "/views/user/change-password.jsp"));
+        pageRoute.put(PageType.SITE_FORGOT_PASSWORD, new PageInfo("Forgot-Password", "/views/user/forgot-password.jsp"));
+        pageRoute.put(PageType.SITE_VIDEO_MANAGER, new PageInfo("Videos Manager", "/views/admin/video-manager.jsp"));
     }
 
     public static void prepareAndForward(HttpServletRequest req, HttpServletResponse resp, PageType pageType) throws ServletException, IOException {

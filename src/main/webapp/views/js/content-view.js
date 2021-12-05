@@ -17,5 +17,3 @@ function ShowToast() {
         toast_failed.show();
     }
 }
-
-

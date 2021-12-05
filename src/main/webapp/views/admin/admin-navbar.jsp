@@ -18,17 +18,17 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="${url}Home">HOME</a>
+        <a class="nav-link active" aria-current="page" href="${url}home">HOME</a>
       </li><li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="${url}Admin/Favorite">MY FAVORITE</a>
+        <a class="nav-link active" aria-current="page" href="${url}admin/favorite">MY FAVORITE</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="${url}Admin/videos">VIDEOS</a>
+        <a class="nav-link active" aria-current="page" href="${url}admin/video-manager">VIDEOS</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="${url}Admin/usermanager">USERS MANAGEMENT</a>
+        <a class="nav-link active" aria-current="page" href="${url}admin/user-manager">USERS MANAGEMENT</a>
       </li><li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="${url}Admin/report">REPORTS</a>
+        <a class="nav-link active" aria-current="page" href="${url}admin/report">REPORTS</a>
       </li>
     </ul>
     <div class="nav-item dropdown me-4">
@@ -47,16 +47,16 @@
           aria-labelledby="navbarDropdown">
         <c:choose>
           <c:when test="${not empty sessionScope.user}">
-            <li><a class="dropdown-item" href="${url}Admin/Change-password">Change Password</a></li>
-            <li><a class="dropdown-item" href="${url}Admin/Edit-profile">Edit Profile</a></li>
+            <li><a class="dropdown-item" href="${url}admin/change-password">Change Password</a></li>
+            <li><a class="dropdown-item" href="${url}admin/edit-profile">Edit Profile</a></li>
             <li>
               <hr class="dropdown-divider">
-            <li><a class="dropdown-item" href="${url}Sign-out">Log Off</a></li>
+            <li><a class="dropdown-item" href="${url}sign-out">Log Off</a></li>
             </li>
           </c:when>
           <c:otherwise>
-            <li><a class="dropdown-item" href="${url}Sign-in">Login</a></li>
-            <li><a class="dropdown-item" href="${url}Admin/Forgot-password">Forgot Password</a></li>
+            <li><a class="dropdown-item" href="${url}sign-in">Login</a></li>
+            <li><a class="dropdown-item" href="${url}forgot-password">Forgot Password</a></li>
           </c:otherwise>
         </c:choose>
       </ul>

@@ -77,7 +77,6 @@
         crossorigin="anonymous">
 </script>
 <script src="${pageContext.request.contextPath}/views/js/content-view.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath}/views/js/change-password.js" type="text/javascript"></script>
 <!-- Script -->
 </body>
 </html>

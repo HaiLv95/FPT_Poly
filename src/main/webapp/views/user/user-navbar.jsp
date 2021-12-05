@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <c:url var="url" value="/"></c:url>
-<a class="navbar-brand" href="${url}Home">ONLINE INTERTAMENT</a>
+<a class="navbar-brand" href="${url}Home">ONLINE ENTERTAMENT</a>
 <button class="navbar-toggler" type="button"
         data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -19,7 +19,7 @@
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
             <a class="nav-link active"
-               aria-current="page" href="${url}User/Favorite">MY FAVORITE</a></li>
+               aria-current="page" href="${url}user/favorite">MY FAVORITE</a></li>
     </ul>
     <div class="nav-item dropdown me-4">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
@@ -37,18 +37,17 @@
             aria-labelledby="navbarDropdown">
             <c:choose>
                 <c:when test="${not empty sessionScope.user}">
-                    <li><a class="dropdown-item" href="${url}Sign-out">Log Off</a></li>
-                    <li><a class="dropdown-item" href="${url}User/Change-password">Change Password</a></li>
+                    <li><a class="dropdown-item" href="${url}sign-out">Log Off</a></li>
+                    <li><a class="dropdown-item" href="${url}user/change-password">Change Password</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="${url}User/Edit-profile">Edit Profile</a></li>
+                    <li><a class="dropdown-item" href="${url}user/edit-profile">Edit Profile</a></li>
                 </c:when>
                 <c:otherwise>
-                    <li><a class="dropdown-item" href="${url}Sign-in">Login</a></li>
-                    <li><a class="dropdown-item" href="${url}User/Forgot-password">Forgot Password</a></li>
-                    <hr class="dropdown-divider">
-                    <li><a class="dropdown-item" href="${url}User/Sign-up"> Registration</a></li>
+                    <li><a class="dropdown-item" href="${url}sign-in">Login</a></li>
+                    <li><a class="dropdown-item" href="${url}sign-up">Registration</a></li>
+                    <li><a class="dropdown-item" href="${url}forgot-password">Forgot Password</a></li>
                 </c:otherwise>
             </c:choose>
         </ul>
