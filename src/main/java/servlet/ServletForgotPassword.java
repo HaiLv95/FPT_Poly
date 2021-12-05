@@ -17,11 +17,15 @@ import java.io.IOException;
 public class ServletForgotPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         PageInfo.prepareAndForward(request, response, PageType.SITE_FORGOT_PASSWORD);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         String method  = request.getMethod();
         UserDAO usDAO = new UserDAO();
         String username = request.getParameter("username");

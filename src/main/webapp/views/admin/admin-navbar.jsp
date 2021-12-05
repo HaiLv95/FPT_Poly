@@ -5,10 +5,11 @@
   Time: 10:00
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <c:url var="url" value="/"></c:url>
-  <a class="navbar-brand" href="${url}Home">ADMINISTRATION TOOL</a>
+  <a class="navbar-brand" href="${url}home">ADMINISTRATION TOOL</a>
   <button class="navbar-toggler" type="button"
           data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -17,9 +18,6 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="${url}home">HOME</a>
-      </li><li class="nav-item">
         <a class="nav-link active" aria-current="page" href="${url}admin/favorite">MY FAVORITE</a>
       </li>
       <li class="nav-item">

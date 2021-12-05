@@ -49,15 +49,15 @@ public class ServletUser extends HttpServlet {
         String uri = req.getRequestURI().toLowerCase();
         if (uri.contains("sign-in")) {
             doSignin(req, resp);
-        }  else if (uri.contains("sign-up")) {
+        } else if (uri.contains("sign-up")) {
             doSignup(req, resp);
         } else if (uri.contains("sign-out")) {
             session.setAttribute("user", null);
-            PageInfo.prepareAndForward(req, resp, PageType.SITE_HOME);
-        } else  if (uri.contains("edit-profile")){
-                doEditprofile(req, resp);
-        }else if(uri.contains("change-password")){
-                doChangePassword(req,resp);
+            resp.sendRedirect(req.getContextPath() + "/home");
+        } else if (uri.contains("edit-profile")) {
+            doEditprofile(req, resp);
+        } else if (uri.contains("change-password")) {
+            doChangePassword(req, resp);
         }
     }
 
@@ -69,7 +69,7 @@ public class ServletUser extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String remember = req.getParameter("remember");
-        if (session.getAttribute("remember") != null){
+        if (session.getAttribute("remember") != null) {
             req.setAttribute("username", usSession.getUsername());
             req.setAttribute("password", usSession.getPassword());
         }
@@ -78,14 +78,14 @@ public class ServletUser extends HttpServlet {
             try {
                 user = userDAO.findById(username);
                 if (password.equals(user.getPassword())) {
-                        session.setAttribute("user", user);
+                    session.setAttribute("user", user);
                     if (remember != null) {
                         session.setAttribute("remember", "remember");
                     } else {
                         session.setAttribute("remember", null);
                     }
                     req.setAttribute("msg", "Đăng nhập thành công");
-                    pageType = PageType.SITE_HOME;
+                    resp.sendRedirect(req.getContextPath() + "/home");
                 } else {
                     req.setAttribute("msgFailed", "Sai tài khoản hoặc mật khẩu");
                 }
@@ -93,8 +93,10 @@ public class ServletUser extends HttpServlet {
                 e.printStackTrace();
                 req.setAttribute("msgFailed", "Đăng nhập không thành công" + e);
             }
+        } else {
+
+            PageInfo.prepareAndForward(req, resp, pageType);
         }
-        PageInfo.prepareAndForward(req, resp, pageType);
     }
 
     public void doSignup(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -115,6 +117,7 @@ public class ServletUser extends HttpServlet {
         }
         PageInfo.prepareAndForward(req, resp, pageType);
     }
+
     public void doEditprofile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PageType pageType = PageType.SITE_EDIT_PROFILE;
         UserDAO userDAO = new UserDAO();
@@ -122,11 +125,11 @@ public class ServletUser extends HttpServlet {
         User user = (User) session.getAttribute("user");
         if (method.equalsIgnoreCase("Post")) {
             try {
-                if (req.getParameter("passwordcf").equals(user.getPassword())){
+                if (req.getParameter("passwordcf").equals(user.getPassword())) {
                     BeanUtils.populate(user, req.getParameterMap());
                     userDAO.update(user);
                     req.setAttribute("msg", "Cập nhật thông tin thành công");
-                }else {
+                } else {
                     req.setAttribute("msgFailed", "Mật khẩu không chính xác!");
                 }
             } catch (Exception e) {
@@ -136,24 +139,25 @@ public class ServletUser extends HttpServlet {
         }
         PageInfo.prepareAndForward(req, resp, pageType);
     }
+
     protected void doChangePassword(HttpServletRequest req, HttpServletResponse resp)
-        throws ServletException, IOException{
+            throws ServletException, IOException {
         PageType pageType = PageType.SITE_CHANGE_PASSWORD;
         UserDAO userDAO = new UserDAO();
         String method = req.getMethod();
         User user = (User) session.getAttribute("user");
         req.setAttribute("username", user.getUsername());
-        if (method.equalsIgnoreCase("Post")){
+        if (method.equalsIgnoreCase("Post")) {
             try {
                 String oldPw = req.getParameter("password");
                 String newPw = req.getParameter("newpassword");
-                if (oldPw.equals(user.getPassword())){
+                if (oldPw.equals(user.getPassword())) {
                     user.setPassword(newPw);
                     userDAO.update(user);
                     req.setAttribute("msg", "Đổi mật khẩu thành công");
                     session.setAttribute("user", null);
                     pageType = PageType.SITE_SIGNIN_USER;
-                }else {
+                } else {
                     req.setAttribute("msgFailed", "Mật khẩu không đúng");
                 }
             } catch (Exception e) {

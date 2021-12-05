@@ -21,7 +21,16 @@ public class CheckLogin implements Filter {
             httpServletRequest.setAttribute("msgFailed", "Bạn chưa đăng nhập");
             PageInfo.prepareAndForward(httpServletRequest, httpServletResponse, PageType.SITE_SIGNIN_USER);
         }else {
-            chain.doFilter(request, response);
+            if(uri.contains("/admin/")){
+                if (user.getAdmin()){
+                    chain.doFilter(request, response);
+                }else {
+                    httpServletRequest.setAttribute("msgFailed", "Tài khoản của bạn không có quyền truy cập");
+                    httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/home");
+                }
+            }else {
+                chain.doFilter(request, response);
+            }
         }
     }
 

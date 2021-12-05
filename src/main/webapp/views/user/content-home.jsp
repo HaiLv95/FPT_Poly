@@ -2,33 +2,36 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container-fluid">
-    <div class="row ms-4">
-        <!-- Video content -->
-        <c:forEach var="video" items="listVideos">
-            <div class="card m-4" style="width:20rem;">
-                <img src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                     class="card-img-top" alt="..." style="max-height: 15rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Video title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <button class="btn btn-primary ms-4">
-                        Like
-                        <span class="material-icons">
+    <c:url var="url" value="/"></c:url>
+    <div class="row justify-content-md-start">
+        <c:forEach var="video" items="${listVD}">
+            <!-- Video content -->
+                <div class="card m-2" style="width:20rem;">
+                    <a href="#" class="mt-1"><img src="${pageContext.request.contextPath}/photos/${video.poster }"
+                            class="card-img-top" alt="..." style="height: 15rem;"></a>
+                    <div class="card-body">
+                        <div style="height: 10rem">
+                            <a href="#" class="link-dark" style="text-decoration: none">
+                                <h6 class="card-title"> ${fn:toUpperCase(video.title)} </h6>
+                            </a>
+                        </div>
+                        <button class="btn btn-primary ms-4">
+                            Like
+                            <span class="material-icons">
                             thumb_up
                         </span>
-                    </button>
-                    <button class="btn btn-success ms-4">Share
-                        <span class="material-icons">
+                        </button>
+                        <button class="btn btn-success ms-4">Share
+                            <span class="material-icons">
                             share
                         </span>
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            <!-- Video content end -->
         </c:forEach>
-        <!-- Video content end -->
     </div>
     <!-- Change page  -->
     <div class="row justify-content-md-center">

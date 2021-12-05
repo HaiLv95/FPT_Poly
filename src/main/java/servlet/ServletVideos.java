@@ -12,20 +12,39 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 @MultipartConfig
 @WebServlet({
         "/admin/add-video",
-        "/admin/video-manager"
+        "/admin/video-manager",
+        "/admin/edit-video",
 })
 public class ServletVideos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_MANAGER);
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        String uri = request.getRequestURI();
+        VideoDAO videoDAO = new VideoDAO();
+        if (uri.contains("video-manager")){
+            try {
+                List<Video> listVD = videoDAO.findAll();
+                request.setAttribute("listVD", listVD);
+            } catch (Exception e) {
+                e.printStackTrace();
+                request.setAttribute("msgFailed", "Lỗi load list video");
+            }
+            PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_MANAGER);
+        }else if (uri.contains("edit-video")){
+            PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_EDITOR);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
         String uri = request.getRequestURI();
         if (uri.contains("admin/add-video")){
             doAddVideo(request, response);
