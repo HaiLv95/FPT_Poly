@@ -31,7 +31,7 @@
                 </div>
                 <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Sign in</button>
                 <a href="${url}sign-up" class="link-primary mb-2" >Sign Up</a> <br>
-                <a href="${url}forgotpassword" class="link-primary mb-2">Forgot Password?</a>
+                <a href="${url}forgot-password" class="link-primary mb-2">Forgot Password?</a>
             </form>
         </main>
     </div>

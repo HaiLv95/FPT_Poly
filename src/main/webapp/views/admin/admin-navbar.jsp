@@ -18,7 +18,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <a class="nav-link active" aria-current="page" href="${url}admin/favorite">MY FAVORITE</a>
+        <a class="nav-link active" aria-current="page" href="${url}user/myfavorite?userid=${sessionScope.user.username}">MY FAVORITE</a>
       </li>
       <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="${url}admin/video-manager">VIDEOS</a>
@@ -26,7 +26,18 @@
       <li class="nav-item">
         <a class="nav-link active" aria-current="page" href="${url}admin/user-manager">USERS MANAGEMENT</a>
       </li><li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="${url}admin/report">REPORTS</a>
+      <div class="nav-item dropdown me-4">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarReport"
+           role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: black">
+          REPORT
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-star"
+            aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="${url}admin/reports-favorites">Favorites</a></li>
+              <li><a class="dropdown-item" href="${url}admin/reports-favorite-users">Favorite Users</a></li>
+              <li><a class="dropdown-item" href="${url}admin/reports-shared-friend">Shared Friend</a></li>
+        </ul>
+      </div>
       </li>
     </ul>
     <div class="nav-item dropdown me-4">

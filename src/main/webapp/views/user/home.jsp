@@ -23,6 +23,7 @@
         html, body {
             max-width: 100%;
             overflow-x: hidden;
+
         }
     </style>
 </head>
@@ -38,8 +39,8 @@
         <jsp:include page="/views/toast/toast_failed.jsp"></jsp:include>
     </c:if>
     <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light  bg-success">
-            <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light  bg-success">
+        <div class="container-fluid">
             <%-- Navbar content --%>
             <c:choose>
                 <c:when test="${sessionScope.user.admin}">
@@ -50,11 +51,13 @@
                 </c:otherwise>
             </c:choose>
             <%-- Navbar content --%>
-            </div>
-        </nav>
+        </div>
+    </nav>
     <!-- Navbar end -->
     <!-- Content -->
+    <div style="min-height: 600px">
     <jsp:include page="${page.contentUrl}"></jsp:include>
+    </div>
     <!-- Content end -->
     <!-- Footer -->
     <div class="container-fluid">
@@ -76,7 +79,21 @@
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous">
 </script>
-<script src="${pageContext.request.contextPath}/views/js/content-view.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function ShowToast() {
+        var myModalSuccess = document.getElementById('myModalSuccess')
+        console.log("showtoast success", myModalSuccess);
+        var myModalFailed = document.getElementById('myModalFailed')
+        console.log("showtoast failed", myModalFailed);
+        if (myModalSuccess != null) {
+            var toast_success = new bootstrap.Toast(myModalSuccess);
+            toast_success.show();
+        } else {
+            var toast_failed = new bootstrap.Toast(myModalFailed);
+            toast_failed.show();
+        }
+    }
+</script>
 <!-- Script -->
 </body>
 </html>

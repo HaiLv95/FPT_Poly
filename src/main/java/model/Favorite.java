@@ -24,13 +24,13 @@ public class Favorite {
     private Video video;
 
     @Column(name = "LikeDate", nullable = false)
-    private Date likeDate;
+    private LocalDate likeDate;
 
-    public Date getLikeDate() {
+    public LocalDate getLikeDate() {
         return likeDate;
     }
 
-    public void setLikeDate(Date likeDate) {
+    public void setLikeDate(LocalDate likeDate) {
         this.likeDate = likeDate;
     }
 

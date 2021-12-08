@@ -1,50 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-
-<body>
-<div class="container">
-    <div class="form-floating mt-4 mb-4">
-        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-        </select>
-        <label for="floatingSelect">Video title</label>
-    </div>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<div class="container mt-2">
+    <c:url var="url" value="/admin"></c:url>
+    <form class="row g-12" action="${url}/reports-favorite-users" method="post">
+        <div class="col-auto">
+            <h4  class="form-label">Title</h4>
+        </div>
+        <div class="col-auto">
+            <select  class="form-select" aria-label="Default select example" name="title">
+                <c:forEach var="favorite" items="${listFV}">
+                    <option>${favorite.title}</option>
+                </c:forEach>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-3">Find</button>
+        </div>
+    </form>
     <table class="table table-striped table-hover table-bordered border-primary">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">USERNAME</th>
+            <th scope="col">FULLNAME</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">FAVORITE DATE</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
+        <c:forEach var="FVTitle" items="${listFVTitle}">
+            <tr>
+                <th scope="row">${FVTitle.username}</th>
+                <td>${FVTitle.fullname}</td>
+                <td>${FVTitle.emails}</td>
+                <td>${FVTitle.likeDate}</td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>
-<!-- Script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-<!-- Script end -->
-</body>
-
-</html>

@@ -6,26 +6,21 @@
     <table class="table table-striped table-hover table-bordered border-primary">
         <thead>
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Title</th>
-            <th scope="col">Poster</th>
-            <th scope="col">Description</th>
-            <th scope="col">Views</th>
-            <th scope="col">Active?</th>
-            <th scope="col">Manager</th>
+            <th scope="col">USERNAME</th>
+            <th scope="col">FULLNAME</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">ADMIN</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="video" items="${listVD}">
+        <c:forEach var="user" items="${listUs}">
             <tr>
-                <th scope="row">${video.id}</th>
-                <td>${video.title}</td>
-                <td>${video.poster}</td>
-                <td>${video.descriptions}</td>
-                <td>${video.views}</td>
-                <td>${video.actives}</td>
+                <th scope="row">${user.username}</th>
+                <td>${user.fullname}</td>
+                <td>${user.email}</td>
+                <td>${user.admin}</td>
                 <td>
-                    <a class="btn btn-primary" href="${url}/edit-video?id=${video.id}" >Edit</a> <br>
+                    <a class="btn btn-primary" href="${url}/user-editor?id=${user.username}" >Edit</a> <br>
                     <button class="btn btn-danger mt-1" id="delete" data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop" >Delete</button>
                 </td>
@@ -36,11 +31,11 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Bạn có chắc chắn muốn xóa video "${video.id}" không? </h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Bạn có chắc chắn muốn xóa video "${user.username}" không? </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-footer">
-                            <a href="${url}/delete-video?id=${video.id}" class="btn btn-primary">Delete</a>
+                            <a href="${url}/delete-user?id=${user.username}" class="btn btn-primary">Delete</a>
                         </div>
                     </div>
                 </div>

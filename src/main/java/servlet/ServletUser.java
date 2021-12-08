@@ -62,7 +62,6 @@ public class ServletUser extends HttpServlet {
     }
 
     public void doSignin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PageType pageType = PageType.SITE_SIGNIN_USER;
         UserDAO userDAO = new UserDAO();
         String method = req.getMethod();
         User usSession = (User) session.getAttribute("user");
@@ -88,6 +87,7 @@ public class ServletUser extends HttpServlet {
                     resp.sendRedirect(req.getContextPath() + "/home");
                 } else {
                     req.setAttribute("msgFailed", "Sai tài khoản hoặc mật khẩu");
+                    PageInfo.prepareAndForward(req, resp, PageType.SITE_SIGNIN_USER);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -95,7 +95,7 @@ public class ServletUser extends HttpServlet {
             }
         } else {
 
-            PageInfo.prepareAndForward(req, resp, pageType);
+            PageInfo.prepareAndForward(req, resp, PageType.SITE_SIGNIN_USER);
         }
     }
 

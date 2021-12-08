@@ -1,45 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div class="container-fluid">
+    <c:url var="url" value="/"></c:url>
     <div class="row ms-4">
-        <!-- Video content -->
-        <div class="card m-4" style="width:20rem;">
-            <img src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                 class="card-img-top" alt="..." style="max-height: 15rem;">
-            <div class="card-body">
-                <h5 class="card-title">Video title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <button class="btn btn-primary ms-4">
-                    Like
-                    <span class="material-icons">
+        <c:forEach var="video" items="${myFavorites}">
+            <!-- Video content -->
+            <div class="card m-2" style="width:20rem;">
+                <a href="${url}view?id=${video.id}" class="mt-1">
+                    <img src="${pageContext.request.contextPath}/photos/${video.poster }"
+                         class="card-img-top" alt="..." style="height: 12rem;"></a>
+                <div class="card-body">
+                    <div style="height: 8rem">
+                        <a href="${url}view?id=${video.id}" class="link-dark" style="text-decoration: none">
+                            <h6 class="card-title"> ${fn:toUpperCase(video.title)} </h6>
+                        </a>
+                    </div>
+                    <a class="btn btn-primary ms-4" href="${url}user/unlike?id=${video.id}">
+                        UnLike
+                        <span class="material-icons">
                             thumb_up
                         </span>
-                </button>
-                <button class="btn btn-success ms-4">Share
-                    <span class="material-icons">
+                    </a>
+                    <button class="btn btn-success ms-4" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">Share
+                        <span class="material-icons">
                             share
                         </span>
-                </button>
+                    </button>
+                </div>
             </div>
-        </div>
-        <!-- Video content end -->
+            <!-- Video content end -->
+            <!-- Dialog Share -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Share video</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="${url}user/shared" method="post" class="form-group">
+                            <div class="modal-body">
+                                <input name="videoID" value="${video.id}" hidden>
+                                <label class="form-label">Share "${video.id}" to:</label>
+                                <input class="form-control" type="email" name="sharedEmail" placeholder="Email address" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- End Dialog Share -->
+        </c:forEach>
     </div>
 </div>
 <!-- Script -->
 
 <!-- Script end -->
-</body>
-
-</html>

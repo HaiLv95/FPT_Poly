@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <c:url var="url" value="/"></c:url>
-<a class="navbar-brand" href="${url}Home">ONLINE ENTERTAMENT</a>
+<a class="navbar-brand" href="${url}home">ONLINE ENTERTAMENT</a>
 <button class="navbar-toggler" type="button"
         data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -19,7 +19,7 @@
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
             <a class="nav-link active"
-               aria-current="page" href="${url}user/favorite">MY FAVORITE</a></li>
+               aria-current="page" href="${url}user/myfavorite?userid=${sessionScope.user.username}">MY FAVORITE</a></li>
     </ul>
     <div class="nav-item dropdown me-4">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"

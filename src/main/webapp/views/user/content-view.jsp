@@ -8,28 +8,26 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
         crossorigin="anonymous">
 <div class="container-fluid">
+    <c:url var="url" value="/"></c:url>
     <div class="row justify-content-md-center mt-4">
         <!-- Video layout -->
         <div class="col-md-7">
             <div class="card mb-3">
-                <iframe max-width="860" height="500px" src="https://www.youtube.com/embed/Rcg2ljKWTuw"
+                <iframe max-width="860" height="500px" src="https://www.youtube.com/embed/${video.id}"
                         title="YouTube video player" frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen></iframe>
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content.
-                        This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 class="card-title">${video.title}</h5>
+                    <p class="card-text">${video.descriptions}</p>
                     <div class="row justify-content-end">
                         <div class="col-md-4">
-                            <button class="btn btn-primary ms-4" onclick="likeClick()">
+                            <a class="btn btn-primary ms-4" href="${url}user/like?id=${video.id}">
                                 Like
                                 <span class="material-icons">
                                         thumb_up
                                     </span>
-                            </button>
+                            </a>
                             <button class="btn btn-success ms-4" data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop">Share
                                 <span class="material-icons">
@@ -51,13 +49,15 @@
                         <h5 class="modal-title" id="staticBackdropLabel">Share video</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="" class="form-group">
+                    <form action="${url}user/shared" method="post" class="form-group">
                         <div class="modal-body">
-                            <label class="form-label">Share to:</label>
-                            <input class="form-control" type="email" placeholder="email">
+                            <input name="videoID" value="${video.id}" hidden>
+                            <label class="form-label">Share "${video.id}" to:</label>
+                            <input class="form-control" type="email" name="sharedEmail" placeholder="Email address"
+                                   required>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Send</button>
+                            <button type="submit" class="btn btn-primary">Send</button>
                         </div>
                     </form>
                 </div>
@@ -66,27 +66,29 @@
         <!-- End Dialog Share -->
         <!-- List layout -->
         <div class="col-md-4 m-2">
-            <div class="card mb-3" style="max-width: 540px;">
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60"
-                             class="img-fluid rounded-start m-2" alt="..." style="width: 360px;max-height: 120px;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <c:forEach var="video" items="${listDX}">
+                <div class="card mb-3" style="max-width: 540px;">
+                    <a class="list-group-item list-group-item-action"
+                       href="${pageContext.request.contextPath}/view?id=${video.id}" style="text-decoration: none">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="${pageContext.request.contextPath}/photos/${video.poster}"
+                                     class="img-fluid rounded-start" alt="..."
+                                     style="width: 146px;max-height: 100px;">
+                            </div>
+                            <div class="col-md-8 ps-1 mt-1">
+                                <div class="card-body p-0 ">
+                                    <h6 class="card-title">${video.title}</h6>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-            </div>
+            </c:forEach>
         </div>
         <!-- End List layout -->
     </div>
 </div>
 <!-- Script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-<script src="./js/content-view.js"></script>
+
 <!-- End Script -->

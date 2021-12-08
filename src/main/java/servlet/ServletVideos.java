@@ -12,6 +12,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @MultipartConfig
@@ -19,6 +20,7 @@ import java.util.List;
         "/admin/add-video",
         "/admin/video-manager",
         "/admin/edit-video",
+        "/admin/delete-video",
 })
 public class ServletVideos extends HttpServlet {
     @Override
@@ -27,17 +29,34 @@ public class ServletVideos extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         String uri = request.getRequestURI();
         VideoDAO videoDAO = new VideoDAO();
-        if (uri.contains("video-manager")){
+        List<Video> listVD = new ArrayList<>();
+        try {
+            listVD = videoDAO.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("msgFailed", "Lỗi load list video");
+        }
+        if (uri.contains("video-manager")) {
+            request.setAttribute("listVD", listVD);
+            PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_MANAGER);
+        } else if (uri.contains("edit-video")) {
+            String id = request.getParameter("id");
+            for (Video video : listVD) {
+                if (id.equals(video.getId())) {
+                    request.setAttribute("video", video);
+                }
+            }
+            PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_EDITOR);
+        }else if (uri.contains("delete-video")){
+            String id = request.getParameter("id");
             try {
-                List<Video> listVD = videoDAO.findAll();
-                request.setAttribute("listVD", listVD);
+                videoDAO.delete(id);
+                request.setAttribute("msg", "Xóa video thành công");
+                response.sendRedirect(request.getContextPath() + "/admin/video-manager");
             } catch (Exception e) {
                 e.printStackTrace();
-                request.setAttribute("msgFailed", "Lỗi load list video");
+                request.setAttribute("msgFailed", "Lỗi xóa video");
             }
-            PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_MANAGER);
-        }else if (uri.contains("edit-video")){
-            PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_EDITOR);
         }
     }
 
@@ -45,22 +64,25 @@ public class ServletVideos extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
+        System.out.println("do post");
         String uri = request.getRequestURI();
-        if (uri.contains("admin/add-video")){
+        if (uri.contains("admin/add-video")) {
             doAddVideo(request, response);
+        } else if (uri.contains("admin/edit-video")) {
+            doUpdateVideo(request, response);
         }
     }
-    public  void doAddVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+
+    public void doAddVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String method = req.getMethod();
         Support sp = new Support();
         VideoDAO videoDAO = new VideoDAO();
         Video video = new Video();
-        if (method.equalsIgnoreCase("post")){
+        if (method.equalsIgnoreCase("post")) {
             try {
                 String poster = sp.uploadImage(req);
                 BeanUtils.populate(video, req.getParameterMap());
                 video.setPoster(poster);
-                System.out.println("video ID: " + video.getId() + "/ title: " + video.getTitle() + "/ description: " + video.getTitle() + "/ poster: " + video.getPoster());
                 videoDAO.insert(video);
                 req.setAttribute("msg", "Thêm video thành công");
                 resp.sendRedirect(req.getContextPath() + "/home");
@@ -68,6 +90,28 @@ public class ServletVideos extends HttpServlet {
                 e.printStackTrace();
                 req.setAttribute("msgFailed", "Lỗi thêm video");
             }
+        }
+    }
+
+    public void doUpdateVideo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String method = req.getMethod();
+        Support sp = new Support();
+        VideoDAO videoDAO = new VideoDAO();
+        Video video = new Video();
+        if (method.equalsIgnoreCase("post")) {
+            try {
+                String poster = sp.uploadImage(req);
+                BeanUtils.populate(video, req.getParameterMap());
+                video.setPoster(poster);
+                videoDAO.update(video);
+                System.out.println(video.getPoster());
+                req.setAttribute("msg", "Cập nhật video thành công");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                req.setAttribute("msgFailed", "Lỗi cập nhật video");
+            }
+            resp.sendRedirect(req.getContextPath() + "/home");
         }
     }
 }

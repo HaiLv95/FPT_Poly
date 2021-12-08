@@ -1,7 +1,4 @@
-function likeClick() {
-    const like = document.getElementById("like");
-    console.log("like", like);
-}
+
 
 function ShowToast() {
     console.log("showtoast");

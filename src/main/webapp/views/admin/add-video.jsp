@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-
 <div class="container">
     <c:url var="url" value="/admin"></c:url>
     <form enctype="multipart/form-data" method="post" class="form-group">
@@ -17,11 +16,11 @@
             </div>
             <div class="col-md-8 mt-4">
                 <label class="form-label">Youtube ID</label>
-                <input type="text" class="form-control" name="id"> <br>
+                <input type="text" class="form-control" name="id" maxlength="50" required> <br>
                 <label class="form-label">Youtube Title</label>
-                <input type="text" class="form-control" name="title"><br>
+                <input type="text" class="form-control" name="title" maxlength="255" required><br>
                 <label class="form-label">View Count</label>
-                <input type="number" class="form-control" name="views"><br>
+                <input type="number" min="0" class="form-control" name="views" required><br>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" id="inlineCheckbox1" name="actives" value="true" checked>
                     <label class="form-check-label" for="inlineCheckbox1">Active</label>
@@ -33,7 +32,7 @@
             </div>
             <div class="col-md-11 ms-4">
                 <label class="form-label">Description</label>
-                <textarea class="form-control" rows="5" name="descriptions"></textarea>
+                <textarea class="form-control" rows="5" name="descriptions" maxlength="1000" required></textarea>
             </div>
             <div class="col-md-6 offset-3 mt-4">
                 <button type="submit" formaction="${url}/add-video" class="btn btn-primary me-4" style="width: 7rem;">Create</button>

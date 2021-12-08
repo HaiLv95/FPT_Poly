@@ -51,7 +51,8 @@ public class Support {
 //		tạo file trong thư mục cha (foder)
         File img = new File(foder, imgName);
         imgPart.write(img.getAbsolutePath());
-        System.out.println("image " + imgName);
+
+        System.out.println(img.getAbsolutePath());
         return imgName;
     }
 }

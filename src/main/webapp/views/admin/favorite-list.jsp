@@ -1,41 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-
-<body>
-<div class="container">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<div class="container mt-2">
     <table class="table table-striped table-hover table-bordered border-primary">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">VIDEO TITLE</th>
+            <th scope="col">FAVORITE COUNT</th>
+            <th scope="col">LASTEST DATE</th>
+            <th scope="col">OLDEST DATE</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
+        <c:forEach var="favorite" items="${listFV}">
+            <tr>
+                <th scope="row">${favorite.title}</th>
+                <td>${favorite.likes}</td>
+                <td>${favorite.latestDate}</td>
+                <td>${favorite.oldestDate}</td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>
-<!-- Script -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-        crossorigin="anonymous"></script>
-<!-- Script end -->
-</body>
-
-</html>

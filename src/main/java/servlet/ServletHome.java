@@ -11,7 +11,10 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/home")
+@WebServlet({
+        "/home",
+        "/"
+})
 public class ServletHome extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -19,7 +22,7 @@ public class ServletHome extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         VideoDAO videoDAO = new VideoDAO();
         try {
-            List<Video> listVD = videoDAO.findAll();
+            List<Video> listVD = videoDAO.findAllVDActive();
             request.setAttribute("listVD", listVD);
         } catch (Exception e) {
             e.printStackTrace();

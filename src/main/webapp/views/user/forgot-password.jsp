@@ -14,8 +14,8 @@
                     <label class="form-label">Email</label>
                     <input class="form-control" name="email" type="email" required> <br>
                     <button class="btn btn-success" style="margin-left: 15rem; width: 10rem">Forgot Password</button>
+                    <a href="${url}sign-in" class="link-primary mb-2 mt-2">Sign in</a>
                 </form>
-                <a href="${url}sign-in" class="link-primary mb-2 mt-2">Sign in</a>
             </div>
         </div>
     </div>
