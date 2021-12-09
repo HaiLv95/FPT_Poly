@@ -106,9 +106,18 @@ public class ServletUser extends HttpServlet {
         User user = new User();
         if (method.equalsIgnoreCase("Post")) {
             try {
+                List<User> listUs = userDAO.findAll();
                 BeanUtils.populate(user, req.getParameterMap());
+                for (User us :
+                        listUs) {
+                    if (user.getUsername().equalsIgnoreCase(us.getUsername())) {
+                        req.setAttribute("msgFailed", "Người dùng đã tồn tại");
+                        PageInfo.prepareAndForward(req, resp, PageType.SITE_REGISTER_USER);
+                        return;
+                    }
+                }
                 userDAO.insert(user);
-                req.setAttribute("msg", "Đăng ký thành công");
+
                 resp.sendRedirect(req.getContextPath() + "/sign-in");
             } catch (Exception e) {
                 e.printStackTrace();

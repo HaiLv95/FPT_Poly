@@ -61,27 +61,28 @@
     <!-- Change page  -->
     <div class="row justify-content-md-center">
         <div class="col-md-auto">
-            <button class="btn btn-outline-secondary">
+            <a class="btn btn-outline-secondary" href="${url}fist?pageNum=${pageNum}">
                     <span class="material-icons">
                         skip_previous
                     </span>
-            </button>
-            <button class="btn btn-outline-secondary">
+            </a>
+            <a class="btn btn-outline-secondary" href="${url}pre?pageNum=${pageNum}" aria-readonly="true">
                     <span class="material-icons">
                         arrow_left
                     </span>
-            </button>
-            <button class="btn btn-outline-secondary">
+            </a>
+            <input type="text" value="${pageNum}">
+            <a class="btn btn-outline-secondary" href="${url}next?pageNum=${pageNum}">
                     <span class="material-icons">
                         arrow_right
                     </span>
-            </button>
+            </a>
 
-            <button class="btn btn-outline-secondary">
+            <a class="btn btn-outline-secondary" href="${url}last?pageNum=${pageNum}">
                     <span class="material-icons">
                         skip_next
                     </span>
-            </button>
+            </a>
         </div>
     </div>
     <!-- End Change page -->

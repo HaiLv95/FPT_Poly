@@ -51,7 +51,6 @@ public class ServletVideos extends HttpServlet {
             String id = request.getParameter("id");
             try {
                 videoDAO.delete(id);
-                request.setAttribute("msg", "Xóa video thành công");
                 response.sendRedirect(request.getContextPath() + "/admin/video-manager");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,15 +76,25 @@ public class ServletVideos extends HttpServlet {
         String method = req.getMethod();
         Support sp = new Support();
         VideoDAO videoDAO = new VideoDAO();
+
         Video video = new Video();
         if (method.equalsIgnoreCase("post")) {
             try {
+                List<Video> listAll = videoDAO.findAllVDActive();
                 String poster = sp.uploadImage(req);
                 BeanUtils.populate(video, req.getParameterMap());
                 video.setPoster(poster);
+                for (Video vd :
+                        listAll) {
+                    if (video.getId().equals(vd.getId())){
+                        req.setAttribute("msgFailed", "Video đã tồn tại");
+                        PageInfo.prepareAndForward(req, resp, PageType.SITE_VIDEO_MANAGER);
+                        return;
+                    }
+                }
                 videoDAO.insert(video);
                 req.setAttribute("msg", "Thêm video thành công");
-                resp.sendRedirect(req.getContextPath() + "/home");
+                resp.sendRedirect(req.getContextPath() + "/admin/video-manager");
             } catch (Exception e) {
                 e.printStackTrace();
                 req.setAttribute("msgFailed", "Lỗi thêm video");

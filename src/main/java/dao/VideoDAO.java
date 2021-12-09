@@ -34,6 +34,19 @@ public class VideoDAO extends AbstractEntity<Video>{
             em.close();
         }
     }
+    public List<Video> findPage(int first, int maxx) {
+        try {
+            EntityManager em = JpaUtils.getEntityManager();
+            String jpql = "SELECT v FROM Video v ";
+            TypedQuery<Video> query = em.createQuery(jpql, Video.class);
+            query.setFirstResult(first);
+            query.setMaxResults(maxx);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public List<Video> findTop5Video() throws Exception {
         EntityManager em = JpaUtils.getEntityManager();
         try {

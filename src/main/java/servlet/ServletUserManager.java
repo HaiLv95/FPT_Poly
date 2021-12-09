@@ -70,14 +70,25 @@ public class ServletUserManager extends HttpServlet {
         String method = req.getMethod();
         User userAdd = new User();
         UserDAO userDAO = new UserDAO();
+
         if (method.equalsIgnoreCase("post")){
             try {
+                List<User> listAllUs = userDAO.findAll();
                 BeanUtils.populate(userAdd, req.getParameterMap());
+                for (User us:
+                     listAllUs) {
+                    if (userAdd.getUsername().equalsIgnoreCase(us.getUsername())){
+                        req.setAttribute("msgFailed", "Người dùng đã tồn tại");
+                        PageInfo.prepareAndForward(req, resp, PageType.SITE_USER_MANAGER);
+                        return;
+                    }
+                }
                 userDAO.insert(userAdd);
-                resp.sendRedirect(req.getContextPath()+"/admin/user-manager");
+                req.setAttribute("msg", "Thêm người dùng thành công");
+                PageInfo.prepareAndForward(req, resp, PageType.SITE_USER_MANAGER);
             } catch (Exception e) {
                 e.printStackTrace();
-                req.setAttribute("msg", "Lỗi thêm mới người dùng");
+                req.setAttribute("msgFailed", "Lỗi thêm mới người dùng");
                 PageInfo.prepareAndForward(req, resp, PageType.SITE_USER_MANAGER);
             }
         }

@@ -5,9 +5,6 @@
     <c:url var="url" value="/admin"></c:url>
     <form class="row g-12" action="${url}/reports-favorite-users" method="post">
         <div class="col-auto">
-            <h4  class="form-label">Title</h4>
-        </div>
-        <div class="col-auto">
             <select  class="form-select" aria-label="Default select example" name="title">
                 <c:forEach var="favorite" items="${listFV}">
                     <option>${favorite.title}</option>
@@ -18,6 +15,7 @@
             <button type="submit" class="btn btn-primary mb-3">Find</button>
         </div>
     </form>
+    <h5 class="mt-2 mb-2">Title: ${title}</h5>
     <table class="table table-striped table-hover table-bordered border-primary">
         <thead>
         <tr>

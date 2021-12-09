@@ -12,7 +12,7 @@
         <form action="${url}/user-add" method="post" class="form-group needs-validation">
 
           <label class="form-label">Username</label>
-          <input class="form-control" name="username" type="text" id="validationTooltipUsername" readonly><br>
+          <input class="form-control" name="username" type="text" id="validationTooltipUsername" required><br>
           <label class="form-label">Fullname</label>
           <input class="form-control" name="fullname" type="text" id="validationTooltip01" required><br>
           <label class="form-label">Email</label>
