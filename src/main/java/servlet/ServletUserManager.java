@@ -85,7 +85,7 @@ public class ServletUserManager extends HttpServlet {
                 }
                 userDAO.insert(userAdd);
                 req.setAttribute("msg", "Thêm người dùng thành công");
-                PageInfo.prepareAndForward(req, resp, PageType.SITE_USER_MANAGER);
+                resp.sendRedirect(req.getContextPath()+"/admin/user-manager");
             } catch (Exception e) {
                 e.printStackTrace();
                 req.setAttribute("msgFailed", "Lỗi thêm mới người dùng");

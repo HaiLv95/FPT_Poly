@@ -36,7 +36,7 @@ public class ServletVideos extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("msgFailed", "Lỗi load list video");
         }
-        if (uri.contains("video-manager")) {
+        if (uri.contains("video-manager") || uri.contains("add-video")) {
             request.setAttribute("listVD", listVD);
             PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_MANAGER);
         } else if (uri.contains("edit-video")) {
@@ -47,15 +47,23 @@ public class ServletVideos extends HttpServlet {
                 }
             }
             PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_EDITOR);
-        }else if (uri.contains("delete-video")){
+        } else if (uri.contains("delete-video")) {
             String id = request.getParameter("id");
             try {
                 videoDAO.delete(id);
-                response.sendRedirect(request.getContextPath() + "/admin/video-manager");
+                request.setAttribute("msg", "Xóa video thành công");
             } catch (Exception e) {
                 e.printStackTrace();
-                request.setAttribute("msgFailed", "Lỗi xóa video");
+                request.setAttribute("msgFailed", "Lỗi xóa video " + e);
             }
+            try {
+                listVD = videoDAO.findAll();
+                request.setAttribute("listVD", listVD);
+            }catch (Exception e){
+                e.printStackTrace();
+                request.setAttribute("msgFailed", "Lỗi load video");
+            }
+            PageInfo.prepareAndForward(request, response, PageType.SITE_VIDEO_MANAGER);
         }
     }
 
@@ -86,19 +94,19 @@ public class ServletVideos extends HttpServlet {
                 video.setPoster(poster);
                 for (Video vd :
                         listAll) {
-                    if (video.getId().equals(vd.getId())){
+                    if (video.getId().equals(vd.getId())) {
                         req.setAttribute("msgFailed", "Video đã tồn tại");
-                        PageInfo.prepareAndForward(req, resp, PageType.SITE_VIDEO_MANAGER);
+                        doGet(req, resp);
                         return;
                     }
                 }
                 videoDAO.insert(video);
                 req.setAttribute("msg", "Thêm video thành công");
-                resp.sendRedirect(req.getContextPath() + "/admin/video-manager");
             } catch (Exception e) {
                 e.printStackTrace();
                 req.setAttribute("msgFailed", "Lỗi thêm video");
             }
+            doGet(req, resp);
         }
     }
 
@@ -120,7 +128,7 @@ public class ServletVideos extends HttpServlet {
                 e.printStackTrace();
                 req.setAttribute("msgFailed", "Lỗi cập nhật video");
             }
-            resp.sendRedirect(req.getContextPath() + "/home");
+            PageInfo.prepareAndForward(req, resp, PageType.SITE_VIDEO_MANAGER);
         }
     }
 }

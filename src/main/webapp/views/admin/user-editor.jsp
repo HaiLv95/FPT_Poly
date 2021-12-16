@@ -16,7 +16,7 @@
                     <label class="form-label">Fullname</label>
                     <input class="form-control" name="fullname" type="text" id="validationTooltip01" value="${userEdit.fullname}" required><br>
                     <label class="form-label">Email</label>
-                    <input class="form-control" name="email" type="email" id="validationTooltip02" value="${userEdit.email}" required><br>
+                    <input class="form-control" name="email" type="email" id="validationTooltipEmail" value="${userEdit.email}" required><br>
                     <select class="form-select" aria-label="Default select example" name="admin">
                         <option value="true" ${userEdit.admin?"selected":""}>Admin</option>
                         <option value="false" ${userEdit.admin?"":"selected"}>User</option>

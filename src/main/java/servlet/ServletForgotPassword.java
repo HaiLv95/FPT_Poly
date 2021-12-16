@@ -40,7 +40,8 @@ public class ServletForgotPassword extends HttpServlet {
                         String content = "Your account password is: " + user.getPassword();
                         support.sendEmail(email, subject ,content);
                         request.setAttribute("msg", "Forgot password thành công. Vui lòng check email");
-                        PageInfo.prepareAndForward(request, response, PageType.SITE_HOME);
+                        response.sendRedirect(request.getContextPath() + "/sign-in");
+
                     }else {
                         request.setAttribute("msgFailed", "Email không đúng");
                         doGet(request, response);

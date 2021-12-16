@@ -38,7 +38,7 @@ public abstract class AbstractEntity<T> {
         } catch (Exception e) {
             // TODO: handle exception
             em.getTransaction().rollback();
-            throw new Exception("Lỗi cập nhật");
+            throw new Exception("Lỗi cập nhật: " + e);
         } finally {
             em.close();
         }
@@ -54,7 +54,7 @@ public abstract class AbstractEntity<T> {
         } catch (Exception e) {
             // TODO: handle exception
             em.getTransaction().rollback();
-            throw new Exception("Lỗi xóa");
+            throw new Exception("Lỗi xóa " + e);
         } finally {
             em.close();
         }
@@ -67,7 +67,7 @@ public abstract class AbstractEntity<T> {
             return entity;
         } catch (Exception e) {
             // TODO: handle exception
-            throw new Exception("Lỗi tìm kiếm theo id");
+            throw new Exception("Lỗi tìm kiếm theo id : " + e);
         } finally {
             em.close();
         }
@@ -81,7 +81,7 @@ public abstract class AbstractEntity<T> {
             return em.createQuery(cq).getResultList();
         } catch (Exception e) {
             // TODO: handle exception
-            throw new Exception("Lỗi get All");
+            throw new Exception("Lỗi get All: " + e);
         } finally {
             em.close();
         }

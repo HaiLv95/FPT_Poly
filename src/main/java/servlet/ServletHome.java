@@ -27,19 +27,19 @@ public class ServletHome extends HttpServlet {
         response.setCharacterEncoding("utf-8");
         VideoDAO videoDAO = new VideoDAO();
         String uri = request.getRequestURI();
-
         try {
+            List<Video> listTopViews = videoDAO.findTop5Views();
             List<Video> listAll = videoDAO.findAllVDActive();
             List<Video> listVD = new ArrayList<>();
             if (listAll.size() > 0) {
                 int maxPage = listAll.size() / 8;
-                if (listAll.size() % 8 > 0){
-                    maxPage ++;
+                if (listAll.size() % 8 > 0) {
+                    maxPage++;
                 }
                 if (uri.endsWith("/") || uri.contains("/home")) {
                     request.setAttribute("pageNum", 1);
                     listVD = videoDAO.findPage(0, 8);
-                    System.out.println("list size " + listAll. size() + "/ list vd " + listVD.size());
+                    System.out.println("list size " + listAll.size() + "/ list vd " + listVD.size());
                 } else if (uri.contains("fist")) {
                     request.setAttribute("pageNum", 1);
                     listVD = videoDAO.findPage(0, 8);

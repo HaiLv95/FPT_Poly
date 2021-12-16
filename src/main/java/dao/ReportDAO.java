@@ -4,6 +4,7 @@ import jpautils.JpaUtils;
 import model.ReportFavoriteUsers;
 import model.ReportFavorites;
 import model.ReportSharedFriend;
+import model.TopLike;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -23,7 +24,7 @@ public class ReportDAO {
     }
     public List<ReportFavoriteUsers> findfavoriteUser(String title) {
         try {
-            String jpql = "SELECT DISTINCT new ReportFavoriteUsers (o.user.username, o.user.fullname, o.user.email, o.likeDate)"
+            String jpql = "SELECT DISTINCT new ReportFavoriteUsers(o.user.username, o.user.fullname, o.user.email, o.likeDate)"
                     + " FROM Favorite o WHERE o.video.title = :keyword";
             TypedQuery<ReportFavoriteUsers> query = em.createQuery(jpql, ReportFavoriteUsers.class);
             query.setParameter("keyword", title);
@@ -45,5 +46,15 @@ public class ReportDAO {
             e.printStackTrace();
         }
         return null;
+    }
+    public List<TopLike> findTopLike(){
+        try {
+            String jsql = "SELECT new TopLike(o.video.id, o.video.title, count(o.video.id) as likes) FROM Favorite o"
+                    + " order by likes desc";
+            TypedQuery<TopLike> query = em.createQuery(jsql, TopLike.class);
+
+        }catch (Exception e){
+
+        }
     }
 }

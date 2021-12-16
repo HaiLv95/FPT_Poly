@@ -64,13 +64,12 @@ public class ServletUser extends HttpServlet {
     public void doSignin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UserDAO userDAO = new UserDAO();
         String method = req.getMethod();
-        User usSession = (User) session.getAttribute("user");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         String remember = req.getParameter("remember");
         if (session.getAttribute("remember") != null) {
-            req.setAttribute("username", usSession.getUsername());
-            req.setAttribute("password", usSession.getPassword());
+            req.setAttribute("username", session.getAttribute("username"));
+            req.setAttribute("password", session.getAttribute("password"));
         }
         User user;
         if (method.equalsIgnoreCase("Post")) {
@@ -80,8 +79,12 @@ public class ServletUser extends HttpServlet {
                     session.setAttribute("user", user);
                     if (remember != null) {
                         session.setAttribute("remember", "remember");
+                        session.setAttribute("username", user.getUsername());
+                        session.setAttribute("password", user.getPassword());
                     } else {
                         session.setAttribute("remember", null);
+                        session.setAttribute("username", null);
+                        session.setAttribute("password", null);
                     }
                     req.setAttribute("msg", "Đăng nhập thành công");
                     resp.sendRedirect(req.getContextPath() + "/home");
@@ -117,7 +120,6 @@ public class ServletUser extends HttpServlet {
                     }
                 }
                 userDAO.insert(user);
-
                 resp.sendRedirect(req.getContextPath() + "/sign-in");
             } catch (Exception e) {
                 e.printStackTrace();

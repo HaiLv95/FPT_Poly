@@ -1,8 +1,6 @@
 package model;
 
 import java.time.LocalDate;
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 

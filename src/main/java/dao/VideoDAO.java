@@ -47,7 +47,20 @@ public class VideoDAO extends AbstractEntity<Video>{
         }
         return null;
     }
-    public List<Video> findTop5Video() throws Exception {
+    public List<Video> findTop5Views() throws Exception {
+        EntityManager em = JpaUtils.getEntityManager();
+        try {
+            String jsql = "select v from Video v order by v.views desc";
+            TypedQuery<Video> query = em.createQuery(jsql, Video.class).setMaxResults(5);
+            return query.getResultList();
+        } catch (Exception e) {
+            // TODO: handle exception
+            throw new Exception("Lỗi load top video");
+        } finally {
+            em.close();
+        }
+    }
+    public List<Video> findTop5Favorites() throws Exception {
         EntityManager em = JpaUtils.getEntityManager();
         try {
             String jsql = "select v from Video v order by v.views desc";
